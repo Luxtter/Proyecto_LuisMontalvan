@@ -5,6 +5,8 @@
 package p5compendium_luismontalvan;
 
 import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
 /**
  *
  * @author luism
@@ -22,7 +24,29 @@ public class P5Compendium_LuisMontalvan {
         //Otra cosa que tengo pensado implementar es que otra condicion para convocar personas es tener el dinero suficiente (en yenes o dolares dependiendo si java soporta los caracteres)
         //El usuario empezaria con alrededor de un millon de yenes y el valor de cada persona estaria en el rango de 2000 a 300000 yenes por cada uno
         //Me comenta porfavor si la complejidad del proyecto esta bien o si deberia añadir algunas cosas para mejorarlo
-        ArrayList nivel= new ArrayList();
+        JFrame frame = new JFrame("My First GUI");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new GridLayout(3, 2, 3, 3));
+        frame.setSize(300, 300);
+        JButton buttonSummon = new JButton("Summon a Persona");
+        JButton buttonDelete = new JButton("Delete a Persona");
+        frame.getContentPane().add(buttonSummon);
+        frame.getContentPane().add(buttonDelete);
+        frame.setVisible(true);
+        ArrayList nivel = new ArrayList();
+        nivel(nivel);
+        ArrayList name = new ArrayList();
+        nombre(name);
+        ArrayList arcana = new ArrayList();
+        arcana(arcana);
+        System.out.println("  Lv. Persona                     Arcana");
+        for (int i = 0; i < nivel.size(); i++) {
+            System.out.println((i + 1) + ".|" + nivel.get(i) + "||" + name.get(i) + "|" + arcana.get(i));
+        }
+    }
+
+    public static void nivel(ArrayList nivel) {
+
         nivel.add(1);
         nivel.add(2);
         nivel.add(2);
@@ -255,7 +279,9 @@ public class P5Compendium_LuisMontalvan {
         nivel.add(93);
         nivel.add(93);
         nivel.add(95);
-        ArrayList name = new ArrayList();
+    }
+
+    public static void nombre(ArrayList name) {
         name.add("Arsene                    |");
         name.add("Jack-o'-Lantern           |");
         name.add("Pixie                     |");
@@ -311,7 +337,7 @@ public class P5Compendium_LuisMontalvan {
         name.add("Izanagi                   |");
         name.add("Orthrus                   |");
         name.add("Pheonix                   |");
-        name.add("Jikokuten                 |");  
+        name.add("Jikokuten                 |");
         name.add("Nigi Mitama               |");
         name.add("Fuu-ki                    |");
         name.add("Sandman                   |");
@@ -488,7 +514,9 @@ public class P5Compendium_LuisMontalvan {
         name.add("Lucifer                   |");
         name.add("Maria                     |");
         name.add("Satanael                  |");
-        ArrayList arcana = new ArrayList();
+    }
+
+    public static void arcana(ArrayList arcana) {
         arcana.add("Fool        |");
         arcana.add("Magician    |");
         arcana.add("Lovers      |");
@@ -721,10 +749,6 @@ public class P5Compendium_LuisMontalvan {
         arcana.add("Star        |");
         arcana.add("Faith       |");
         arcana.add("Fool        |");
-        System.out.println("  Lv. Persona                     Arcana");
-        for (int i = 0; i < nivel.size(); i++) {
-            System.out.println((i+1)+".|"+nivel.get(i)+"||"+name.get(i)+"|"+arcana.get(i));
-        }
     }
-    
+
 }
