@@ -5,8 +5,10 @@
 package p5compendium_luismontalvan;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
+
 /**
  *
  * @author luism
@@ -24,29 +26,89 @@ public class P5Compendium_LuisMontalvan {
         //Otra cosa que tengo pensado implementar es que otra condicion para convocar personas es tener el dinero suficiente (en yenes o dolares dependiendo si java soporta los caracteres)
         //El usuario empezaria con alrededor de un millon de yenes y el valor de cada persona estaria en el rango de 2000 a 300000 yenes por cada uno
         //Me comenta porfavor si la complejidad del proyecto esta bien o si deberia añadir algunas cosas para mejorarlo
-        JFrame frame = new JFrame("My First GUI");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(3, 2, 3, 3));
-        frame.setSize(300, 300);
-        JButton buttonSummon = new JButton("Summon a Persona");
-        JButton buttonDelete = new JButton("Delete a Persona");
-        frame.getContentPane().add(buttonSummon);
-        frame.getContentPane().add(buttonDelete);
-        frame.setVisible(true);
+        Scanner pochita = new Scanner(System.in);
+        Persona persona = new Persona();
+        persona.inicializar();
         ArrayList nivel = new ArrayList();
-        nivel(nivel);
         ArrayList name = new ArrayList();
-        nombre(name);
         ArrayList arcana = new ArrayList();
-        arcana(arcana);
+        listas(nivel, name, arcana);
+        int numPersona = 0;
+
+        Outer:
+        do {
+            System.out.println("Que desea hacer?\n1)Invocar una Persona\n2)Borrar una Persona\n3)Ver mis Personas\n4)Salir");
+            int opc = pochita.nextInt();
+            switch (opc) {
+                case 1:
+                    if (numPersona < 6) {
+                        int invocado = Invocar(nivel, name, arcana, persona.getYen());
+                        int gastado = 0;
+                        int nvoTotal = 0;
+                        if(invocado==1){
+                            gastado = (invocado)*1000;
+                            nvoTotal = persona.getYen()-gastado;
+                        }else{
+                            gastado = (invocado - 1)*1000;
+                            nvoTotal = persona.getYen()-gastado;
+                        }
+                        persona.setYen(nvoTotal);
+                        int level = (int) nivel.get(invocado - 1);
+                        String nombre = (String) name.get(invocado - 1);
+                        String arc = (String) arcana.get(invocado - 1);
+                        persona.Personas(level, nombre, arc);
+                        numPersona++;
+                    } else {
+                        System.out.println("No puede agregar mas Personas");
+                    }
+                    break;
+                case 2:
+
+                    System.out.println("Cuantas Personas desea borrar: ");
+                    int aBorrar = pochita.nextInt();
+                    if (aBorrar <= 6) {
+                        if (aBorrar <= persona.name.size()) {
+                            for (int i = 0; i < aBorrar; i++) {
+                                System.out.println("Se ha borrado la siguiente Persona: \n|" + persona.nivel.get(0) + "||" + persona.name.get(0) + "|" + persona.arcana.get(0));
+                                persona.Borrar();
+                            }
+                        } else {
+                            System.out.print("La cantidad de Personas que usted quiere borrar no es valida");
+                        }
+                    } else {
+                        System.out.print("La cantidad de Personas que usted quiere borrar no es valida");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Estas son sus Personas");
+                    System.out.println("  Lv. Persona                     Arcana");
+                    for (int i = 0; i < persona.nivel.size(); i++) {
+                        System.out.println((i + 1) + ".|" + persona.nivel.get(i) + "||" + persona.name.get(i) + "|" + persona.arcana.get(i));
+                    }
+                    break;
+                case 4:
+                    break Outer;
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
+            }
+        } while (true);
+
+    }
+
+    public static int Invocar(ArrayList nivel, ArrayList name, ArrayList arcana, int yen) {
+        Scanner pochita = new Scanner(System.in);
         System.out.println("  Lv. Persona                     Arcana");
         for (int i = 0; i < nivel.size(); i++) {
             System.out.println((i + 1) + ".|" + nivel.get(i) + "||" + name.get(i) + "|" + arcana.get(i));
         }
+        System.out.println("A quien desea invocar? (Del 1 al 232)\nCantidad de dinero disponible: "+yen+" yen");
+        int persona = pochita.nextInt();
+        return persona;
+
     }
 
-    public static void nivel(ArrayList nivel) {
-
+    public static void listas(ArrayList nivel, ArrayList name, ArrayList arcana) {
         nivel.add(1);
         nivel.add(2);
         nivel.add(2);
@@ -279,9 +341,7 @@ public class P5Compendium_LuisMontalvan {
         nivel.add(93);
         nivel.add(93);
         nivel.add(95);
-    }
 
-    public static void nombre(ArrayList name) {
         name.add("Arsene                    |");
         name.add("Jack-o'-Lantern           |");
         name.add("Pixie                     |");
@@ -514,9 +574,7 @@ public class P5Compendium_LuisMontalvan {
         name.add("Lucifer                   |");
         name.add("Maria                     |");
         name.add("Satanael                  |");
-    }
 
-    public static void arcana(ArrayList arcana) {
         arcana.add("Fool        |");
         arcana.add("Magician    |");
         arcana.add("Lovers      |");
@@ -737,7 +795,7 @@ public class P5Compendium_LuisMontalvan {
         arcana.add("Hermit      |");
         arcana.add("Magician    |");
         arcana.add("Devil       |");
-        arcana.add("Judgment     |");
+        arcana.add("Judgment    |");
         arcana.add("Tower       |");
         arcana.add("Chariot     |");
         arcana.add("Justice     |");
@@ -749,6 +807,7 @@ public class P5Compendium_LuisMontalvan {
         arcana.add("Star        |");
         arcana.add("Faith       |");
         arcana.add("Fool        |");
+
     }
 
 }
